@@ -6,5 +6,6 @@ router.get("/:user_id", contactControllers.listContact);
 router.post("/", contactControllers.createContact);
 router.patch("/:id", contactControllers.updateContact);
 router.delete("/:id", contactControllers.deleteContact);
+router.put("/recover", contactControllers.recoverContacts);
 
 module.exports = router;

@@ -29,6 +29,11 @@ const contactSchema = Schema({
     ref: "Relation",
     required:[true, "relation_id not given"]
   },
+  is_deleted :{
+    type: Boolean,
+    default: false,
+  }
+  
 });
 
 contactSchema.index({

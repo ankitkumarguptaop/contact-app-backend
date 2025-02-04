@@ -15,14 +15,13 @@ exports.signUp = async (payload) => {
   const profilePicture = file ? file.path : null;
   const { first_name, last_name, password, email } = body;
   if (!first_name || !last_name || !password || !email ) {
-    const error = new BadRequest("data not given");
-    throw error;
+    throw error = new BadRequest("data not given");
   }
 
   const user = await users.findOne({ email });
 
   if (!user) {
-    const signedUser = new users({ ...body, picture: profilePicture });
+    const signedUser = new users({ ...body , picture:profilePicture });
     return await signedUser.save();
   } else {
     throw new ForBidden("User already signup!");
@@ -52,5 +51,22 @@ exports.signIn = async (payload) => {
     }
   } else {
     throw new ForBidden("Need to register First!");
+  }
+};
+
+
+exports.googleAuth = async (payload) => {
+  const { body } = payload;
+  const { email, first_name  ,picture} = body;
+  if (!email && !first_name ,!picture) {
+    throw new UnAuthorized("Unauthorised access!");
+  }
+  const user = await users.findOne({ email: email });
+  if (user) {
+      return { token:generateToken(user._id) , user: user };
+  } else {
+    const createUser = new users({ ...body });
+     await createUser.save();
+    return { token:generateToken(createUser._id) , user: createUser };
   }
 };

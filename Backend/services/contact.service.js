@@ -1,7 +1,6 @@
 const { contactModel } = require("../models");
 const Contact = contactModel.Contact;
 const { NoContent, BadRequest } = require("../libs/error");
-const { parse } = require("dotenv");
 
 exports.updateContact = async (payload) => {
   const { body, params } = payload;
@@ -20,7 +19,12 @@ exports.updateContact = async (payload) => {
 
 exports.deleteContact = async (payload) => {
   const { id } = payload.params;
-  const contact = await Contact.findOneAndDelete({ _id: id });
+  // const contact = await Contact.findOneAndDelete({ _id: id });
+  const contact = await Contact.findOneAndUpdate(
+    { _id: id },
+    { is_deleted: true },
+    { returnDocument: "after" }
+  );
   if (!contact) {
     throw new BadRequest("Contact not found to delete ");
   }
@@ -32,18 +36,18 @@ exports.listContact = async (payload) => {
   let { search, relation, favourite, limit = 10, page = 0 } = payload.query;
   page = parseInt(page);
   limit = parseInt(limit);
-  if (page === "undefined") {
-    page = 0;
-  }
-  if (limit === "undefined") {
-    limit = 10;
-  }
+  // if (page === "undefined") {
+  //   page = 0;
+  // }
+  // if (limit === "undefined") {
+  //   limit = 10;
+  // }
 
   let offset = 0;
   if (page && limit) {
     offset = page * limit;
   }
-  const filters = [{ user_id: user_id }];
+  const filters = [{ user_id: user_id } ,{is_deleted:false}];
 
   if (relation && relation !== "undefined") {
     filters.push({ relation_id: relation });
@@ -97,4 +101,16 @@ exports.createContact = async (payload) => {
   }).populate("relation_id");
 
   return createdContctWithRelation;
+};
+
+
+exports.recoverContacts = async () => {
+  const contacts = await Contact.updateMany({is_deleted: true }, {is_deleted: false }, {
+    returnDocument: "after",
+  })
+  if (!contacts) {
+    const error = new NoContent("Contact not found to recover ");
+    throw error;
+  }
+  return contacts;
 };

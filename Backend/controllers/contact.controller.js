@@ -14,6 +14,18 @@ exports.updateContact = async (req, res) => {
   }
 };
 
+exports.recoverContacts = async (req, res) => {
+  try {
+   const recoveredContcts = await contactServices.recoverContacts();
+    res.json(recoveredContcts);
+  } catch (error) {
+    console.log("Failed to recover contacts", error.message);
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+};
+
+
+
 exports.deleteContact = async (req, res) => {
   try {
    const contact=  await contactServices.deleteContact({
@@ -21,7 +33,7 @@ exports.deleteContact = async (req, res) => {
       thisUser: req.user,
     });
     res.json({
-      // message: "Contact Successfuly Deleted",
+      message: "Contact Successfuly Deleted",
       contact :contact
     });
   } catch (error) {

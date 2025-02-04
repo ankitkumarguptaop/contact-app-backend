@@ -10,7 +10,7 @@ const userSchema = Schema(
     },
     last_name: {
       type: String,
-      required: [true, "LastName not given"],
+      // required: [true, "LastName not given"],
     },
     email: {
       type: String,
@@ -19,12 +19,13 @@ const userSchema = Schema(
     },
     password: {
       type: String,
+      default:"xyz",
       required: [true, "Password not given"],
     },
-    // picture: {
-    //   type: String,
-    //   required: [true, "Picture not given"],
-    // },
+    picture: {
+      type: String,
+      required: [true, "Picture not given"],
+    },
   },
   { timestamps: true }
 );

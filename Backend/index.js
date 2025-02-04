@@ -22,7 +22,6 @@ app.use(express.json());
 
 app.use("/", require("./routes"));
 
-
 const APP_PORT = process.env.APP_PORT || 8080;
 
 app.listen(APP_PORT, () => {

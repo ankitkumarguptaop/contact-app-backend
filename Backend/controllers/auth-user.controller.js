@@ -8,7 +8,7 @@ exports.signUp = async (req, res) => {
     });
     res.json(user);
   } catch (error) {
-    console.log("unable to signup", error, message);
+    console.log("unable to signup", error.message);
     res.status(error.statusCode || 500).json({ error: error.message });
   }
 };
@@ -24,6 +24,23 @@ exports.signIn = async (req, res) => {
     res.json({ token: token, user: user });
   } catch (error) {
     console.log("unable to signin", error.message);
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+};
+
+exports.googleAuth = async (req, res) => {
+  try {
+    const { token, user } = await authUserServices.googleAuth({
+      body: req.body,
+    });
+    const cookieOptions = {
+      secure: true,
+      httpOnly: true,
+    };
+    res.cookie("jwt", token, cookieOptions);
+    res.json({ token: token, user: user });
+  } catch (error) {
+    console.log("unable to signup", error, message);
     res.status(error.statusCode || 500).json({ error: error.message });
   }
 };
