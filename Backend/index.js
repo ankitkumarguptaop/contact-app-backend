@@ -9,14 +9,18 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: false })); // extended  true is for nested data
+
 app.use(
   cors({
-    origin: process.env.CORS_URI, 
-    credentials: true, 
+    origin: process.env.CORS_URI,
+    credentials: true, // for cookies
   })
 );
-app.use(express.urlencoded({ extended: false }));
+
+app.use(express.urlencoded({ extended: false })); //for file data
+app.use("/uploads", express.static("uploads")); // for read static files
+
 app.use(cookieParser());
 app.use(express.json());
 

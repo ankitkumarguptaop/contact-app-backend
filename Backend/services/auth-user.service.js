@@ -14,6 +14,8 @@ exports.signUp = async (payload) => {
 
   const profilePicture = file ? file.path : null;
   const { first_name, last_name, password, email } = body;
+  console.log(body);
+  console.log(profilePicture);
   if (!first_name || !last_name || !password || !email ) {
     throw error = new BadRequest("data not given");
   }
