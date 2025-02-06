@@ -5,7 +5,7 @@ exports.listUser = async (req, res) => {
     const users = await userServices.listUser({
       query: req.query,
     });
-    res.json(users);
+    res.status(200).json(users);
   } catch (error) {
     console.log("Failed to list users", error.message);
     res.status(error.statusCode || 500).json({ error: error.message });
@@ -15,7 +15,7 @@ exports.listUser = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const user = await userServices.getUser({ params: req.params });
-    res.json(user);
+    res.status(200).json(user);
   } catch (error) {
     console.log("Failed to get user", error.message);
     res.status(error.statusCode || 500).json({ error: error.message });
@@ -29,7 +29,7 @@ exports.updateUser = async (req, res) => {
       params: req.params,
       thisUser: req.user,
     });
-    res.json({
+    res.status(200).json({
       message: "successfuly user updated ",
     });
   } catch (error) {
@@ -44,7 +44,7 @@ exports.deleteUser = async (req, res) => {
       params: req.params,
       thisUser: req.user,
     });
-    res.json({ message: "successfuly deleted user" });
+    res.status(200).json({ message: "successfuly deleted user" });
   } catch (error) {
     console.log("Failed to delete user", error.message);
     res.status(error.statusCode || 500).json({ error: error.message });

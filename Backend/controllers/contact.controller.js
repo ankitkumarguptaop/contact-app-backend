@@ -7,7 +7,7 @@ exports.updateContact = async (req, res) => {
       params: req.params,
       thisUser: req.user,
     });
-    res.json(updatedContact);
+    res.status(200).json(updatedContact);
   } catch (error) {
     console.log("Failed to update contacts", error.message);
     res.status(error.statusCode || 500).json({ error: error.message });
@@ -17,7 +17,7 @@ exports.updateContact = async (req, res) => {
 exports.recoverContacts = async (req, res) => {
   try {
    const recoveredContcts = await contactServices.recoverContacts();
-    res.json(recoveredContcts);
+    res.status(200).json(recoveredContcts);
   } catch (error) {
     console.log("Failed to recover contacts", error.message);
     res.status(error.statusCode || 500).json({ error: error.message });
@@ -32,7 +32,7 @@ exports.deleteContact = async (req, res) => {
       params: req.params,
       thisUser: req.user,
     });
-    res.json({
+    res.status(200).json({
       message: "Contact Successfuly Deleted",
       contact :contact
     });
@@ -48,7 +48,7 @@ exports.listContact = async (req, res) => {
       query: req.query,
       params: req.params,
     });
-    res.json(contacts);
+    res.status(200).json(contacts);
   } catch (error) {
     console.log("Failed to list contacts", error.message, error.statusCode);
     res.status(error.statusCode || 500).json({ error: error.message });
@@ -60,7 +60,7 @@ exports.createContact = async (req, res) => {
     const contacts = await contactServices.createContact({
       body: req.body,
     });
-    res.json(contacts);
+    res.status(201).json(contacts);
   } catch (error) {
     console.log("Failed to Create contacts", error.message);
     res.status(error.statusCode || 500).json({ error: error.message });

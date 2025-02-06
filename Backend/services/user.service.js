@@ -1,5 +1,5 @@
 const { User } = require("../models/user.model");
-const {
+const { 
   ForBidden,
   NoContent,
   UnAuthorized,

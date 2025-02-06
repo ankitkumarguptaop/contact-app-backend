@@ -6,7 +6,7 @@ exports.signUp = async (req, res) => {
       body: req.body,
       file: req.file,
     });
-    res.json(user);
+    res.status(201).json(user);
   } catch (error) {
     console.log("unable to signup", error.message);
     res.status(error.statusCode || 500).json({ error: error.message });
@@ -21,7 +21,7 @@ exports.signIn = async (req, res) => {
       httpOnly: true,
     };
     res.cookie("jwt", token, cookieOptions);
-    res.json({ token: token, user: user });
+    res.status(200).json({ token: token, user: user });
   } catch (error) {
     console.log("unable to signin", error.message);
     res.status(error.statusCode || 500).json({ error: error.message });
@@ -38,7 +38,7 @@ exports.googleAuth = async (req, res) => {
       httpOnly: true,
     };
     res.cookie("jwt", token, cookieOptions);
-    res.json({ token: token, user: user });
+    res.status(200).json({ token: token, user: user });
   } catch (error) {
     console.log("unable to signup", error, message);
     res.status(error.statusCode || 500).json({ error: error.message });

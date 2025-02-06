@@ -19,7 +19,7 @@ exports.updateContact = async (payload) => {
 
 exports.deleteContact = async (payload) => {
   const { id } = payload.params;
-  // const contact = await Contact.findOneAndDelete({ _id: id });
+  // const contact = await Contact.findOneAndDelete({ _id: id }); // for soft delete
   const contact = await Contact.findOneAndUpdate(
     { _id: id },
     { is_deleted: true },
@@ -36,28 +36,21 @@ exports.listContact = async (payload) => {
   let { search, relation, favourite, limit = 10, page = 0 } = payload.query;
   page = parseInt(page);
   limit = parseInt(limit);
-  // if (page === "undefined") {
-  //   page = 0;
-  // }
-  // if (limit === "undefined") {
-  //   limit = 10;
-  // }
 
-  let offset = 0;
+  let offset = 0; //start from
   if (page && limit) {
     offset = page * limit;
   }
-  const filters = [{ user_id: user_id } ,{is_deleted:false}];
+  const filters = [{ user_id: user_id }, { is_deleted: false }];
 
-  if (relation && relation !== "undefined") {
+  if (relation) {
     filters.push({ relation_id: relation });
   }
 
   if (favourite === "true") {
     filters.push({ favourite: true });
   }
-
-  if (search !== "undefined" && search) {
+  if (search) {
     filters.push({
       $or: [
         { first_name: { $regex: search, $options: "i" } },
@@ -103,11 +96,14 @@ exports.createContact = async (payload) => {
   return createdContctWithRelation;
 };
 
-
 exports.recoverContacts = async () => {
-  const contacts = await Contact.updateMany({is_deleted: true }, {is_deleted: false }, {
-    returnDocument: "after",
-  })
+  const contacts = await Contact.updateMany(
+    { is_deleted: true },
+    { is_deleted: false },
+    {
+      returnDocument: "after",
+    }
+  );
   if (!contacts) {
     const error = new NoContent("Contact not found to recover ");
     throw error;
