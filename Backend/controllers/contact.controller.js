@@ -2,7 +2,7 @@ const { contactServices } = require("../services");
 
 exports.updateContact = async (req, res) => {
   try {
-   const updatedContact = await contactServices.updateContact({
+    const updatedContact = await contactServices.updateContact({
       body: req.body,
       params: req.params,
       thisUser: req.user,
@@ -16,7 +16,7 @@ exports.updateContact = async (req, res) => {
 
 exports.recoverContacts = async (req, res) => {
   try {
-   const recoveredContcts = await contactServices.recoverContacts();
+    const recoveredContcts = await contactServices.recoverContacts();
     res.status(200).json(recoveredContcts);
   } catch (error) {
     console.log("Failed to recover contacts", error.message);
@@ -24,17 +24,15 @@ exports.recoverContacts = async (req, res) => {
   }
 };
 
-
-
 exports.deleteContact = async (req, res) => {
   try {
-   const contact=  await contactServices.deleteContact({
+    const contact = await contactServices.deleteContact({
       params: req.params,
       thisUser: req.user,
     });
     res.status(200).json({
       message: "Contact Successfuly Deleted",
-      contact :contact
+      contact: contact,
     });
   } catch (error) {
     console.log("Failed to delete contacts", error.message);

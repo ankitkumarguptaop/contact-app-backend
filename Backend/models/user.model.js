@@ -19,7 +19,7 @@ const userSchema = Schema(
     },
     password: {
       type: String,
-      default:"xyz",
+      default: "xyz",
       required: [true, "Password not given"],
     },
     picture: {
@@ -27,7 +27,7 @@ const userSchema = Schema(
       required: [true, "Picture not given"],
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 userSchema.methods.matchPassword = async function (enteredPassword) {

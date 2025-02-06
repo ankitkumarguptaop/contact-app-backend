@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: process.env.CORS_URI,
     credentials: true, // for cookies
-  })
+  }),
 );
 
 app.use(express.urlencoded({ extended: false })); //for file data

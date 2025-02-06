@@ -23,7 +23,7 @@ exports.deleteContact = async (payload) => {
   const contact = await Contact.findOneAndUpdate(
     { _id: id },
     { is_deleted: true },
-    { returnDocument: "after" }
+    { returnDocument: "after" },
   );
   if (!contact) {
     throw new BadRequest("Contact not found to delete ");
@@ -97,16 +97,13 @@ exports.createContact = async (payload) => {
 };
 
 exports.recoverContacts = async () => {
-  const contacts = await Contact.updateMany(
-    { is_deleted: true },
-    { is_deleted: false },
-    {
-      returnDocument: "after",
-    }
+  const contacts = await Contact.find({ is_deleted: true }).populate(
+    "relation_id",
   );
   if (!contacts) {
     const error = new NoContent("Contact not found to recover ");
     throw error;
   }
+  await Contact.updateMany({ is_deleted: true }, { is_deleted: false });
   return contacts;
 };

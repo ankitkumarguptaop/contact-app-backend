@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
     "data:import": "node relation-seeder",
@@ -24,6 +25,7 @@
     "mongoose": "^8.9.5",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.9",
+    "prettier": "^3.4.2",
     "routes": "^2.1.0"
   }
 }

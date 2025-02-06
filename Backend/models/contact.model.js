@@ -21,19 +21,17 @@ const contactSchema = Schema({
   user_id: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required:[true, "user_id not given"]
-
+    required: [true, "user_id not given"],
   },
   relation_id: {
     type: Schema.Types.ObjectId,
     ref: "Relation",
-    required:[true, "relation_id not given"]
+    required: [true, "relation_id not given"],
   },
-  is_deleted :{
+  is_deleted: {
     type: Boolean,
     default: false,
-  }
-  
+  },
 });
 
 contactSchema.index({

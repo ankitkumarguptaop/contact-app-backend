@@ -5,7 +5,7 @@ const { jwtTokenValidation } = require("../middlewares/auth.middleware");
 router.use(
   "/users",
   authUserMiddleware.jwtTokenValidation,
-  require("./user.route")
+  require("./user.route"),
 );
 router.use("/auth", require("./auth-user.route"));
 router.use("/contacts", require("./contact.route"));

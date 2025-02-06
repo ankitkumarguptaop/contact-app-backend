@@ -7,7 +7,7 @@ router.post("/signin", authUserControllers.signIn);
 router.post(
   "/signup",
   uploadPicture().single("picture"),
-  authUserControllers.signUp
+  authUserControllers.signUp,
 );
 router.post("/google", authUserControllers.googleAuth);
 module.exports = router;

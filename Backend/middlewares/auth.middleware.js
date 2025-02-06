@@ -6,8 +6,7 @@ exports.jwtTokenValidation = async (req, res, next) => {
   let token;
   try {
     token = req?.cookies?.jwt;
-    token = 
-    console.log(token)
+    token = console.log(token);
     if (token) {
       console.log("token", token);
       const authenticatedUser = jwt.verify(token, process.env.JWT_SECRET);
